@@ -13,13 +13,13 @@ const App = () => {
   ]
 
   return (
-    <div>
+    <>
       <Header />
       <section className='main'>
         <TaskList todos={todoData} />
         <Footer />
       </section>
-    </div>
+    </>
   );
 };
 
