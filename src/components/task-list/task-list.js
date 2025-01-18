@@ -5,11 +5,12 @@ import Task from "../task";
 export default class MyTaskList extends Component {
 
   render() {
-    const { todos } = this.props;
+    const { todos, onDelete } = this.props;
   
     return (
       <ul className="todo-list">
-        { todos.map((item) => < Task info={item} key={item.id} />) }
+        { todos.map((item) => < Task info={item}
+        onDelete={() => (onDelete(item.id))} key={item.id} />) }
       </ul>
     )
   }

@@ -20,6 +20,7 @@ export default class Task extends Component {
   
   render() {
     let {description, createdAt} = this.props.info;
+    const onDelete = this.props.onDelete;
     const {done, editing} = this.state;
     if (editing) {
       this.inputField = (
@@ -40,7 +41,9 @@ export default class Task extends Component {
             <span className="created">{createdAt}</span>
           </label>
           <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy"></button>
+          <button
+           className="icon icon-destroy"
+           onClick={() => onDelete()}></button>
         </div>
         { this.inputField }
       </li>

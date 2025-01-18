@@ -12,12 +12,25 @@ export default class App extends Component {
     { liClass: null, description: "Active task", createdAt: "created 5 minutes ago", id: 3},
   ]}
 
+  deleteItem = (id) => {
+    this.setState(({todoData}) => {
+      const idx = todoData.findIndex(item => item.id === id);
+      const start = todoData.slice(0, idx);
+      const end = todoData.slice(idx+1);
+      return {
+        todoData: [...start, ...end]
+      }
+    }) 
+  }
+
   render() {
     return (
       <Fragment>
         <Header />
         <section className='main'>
-          <TaskList todos={this.state.todoData} />
+          <TaskList 
+          todos={this.state.todoData} 
+          onDelete={this.deleteItem} />
           <Footer />
         </section>
       </Fragment>
