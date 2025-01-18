@@ -3,35 +3,38 @@ import '../../index.css';
 
 export default class Task extends Component {
   state = {
-    done: false,
-    editing: false
+    done: (this.props.info.liClass === "completed"),
+    editing: (this.props.info.liClass === "editing")
   }
   inputField = null;
 
-  toggleDone = () => {
-    this.setState((prevState) => ({done: !prevState.done}))
+  toggleDone = (event) => {
+    if (event.target.className === "toggle" ||
+      this.state.editing) return;
+    this.setState((prevState) => ({done: !prevState.done}));
   }
 
-  toggleCheckbox = (event) => {
-    event.stopPropagation();
-    this.toggleDone();
+  toggleCheckbox = () => {
+    this.setState((prevState) => ({ done: !prevState.done }));
   }
   
   render() {
-    let {description, createdAt, liClass} = this.props.info;
-    const done = this.state.done;
-    if (liClass === "editing") {
+    let {description, createdAt} = this.props.info;
+    const {done, editing} = this.state;
+    if (editing) {
       this.inputField = (
         <input type="text" className="edit" value="Editing task" />
       )
     }
-    // if (liClass === "completed") {this.toggleDone()}
+    const computedLiClass = done ? "completed" : (editing ? "editing" : "");
+
     return (
-      <li className={ liClass } onClick={this.toggleDone}>
+      <li className={ computedLiClass } onClick={this.toggleDone}>
         <div className="view">
           <input className="toggle" type="checkbox" 
-           checked={liClass === 'completed' || done}
-           onChange={this.toggleCheckbox}/>
+           checked={done}
+           onChange={this.toggleCheckbox}
+           />
           <label>
             <span className="description">{description}</span>
             <span className="created">{createdAt}</span>
