@@ -32,6 +32,20 @@ export default class App extends Component {
     }) 
   }
 
+  turnOnEditMode = (id) => {
+    this.setState(({todoData}) => {
+      const idx = todoData.findIndex(item => item.id === id);
+      const start = todoData.slice(0, idx);
+      const end = todoData.slice(idx+1);
+      // const editedItem = {...todoData[idx], liClass: "editing"};
+      const editedItem = {...todoData[idx], description: "123"};
+      return {
+        todoData: [...start, editedItem, ...end]
+      }
+    })
+    console.log('edit', this.state.todoData[0])
+  }
+
   render() {
     return (
       <Fragment>
@@ -39,7 +53,8 @@ export default class App extends Component {
         <section className='main'>
           <TaskList 
           todos={this.state.todoData} 
-          onDelete={this.deleteItem} />
+          onDelete={this.deleteItem} 
+          onEdit={this.turnOnEditMode} />
           <Footer />
         </section>
       </Fragment>
