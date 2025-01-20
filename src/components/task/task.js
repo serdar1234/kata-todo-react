@@ -25,7 +25,8 @@ function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject}) {
     }
   }
   const clickHandler = (evt) => {
-    if(evt.target.classList.contains("icon-edit")) return;
+    if(evt.target.classList.contains("icon-edit"))    return;
+    if(evt.target.classList.contains("icon-destroy")) return;
     onDone();
   }
 
