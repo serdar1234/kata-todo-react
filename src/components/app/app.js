@@ -21,29 +21,39 @@ export default class App extends Component {
     return `Created ${timing} ago`;
   }
 
-  deleteItem = (id) => {
+  updateTodo = (id, action) => {
     this.setState(({todoData}) => {
       const idx = todoData.findIndex(item => item.id === id);
+      if (idx === -1) {
+        console.log('Index not found');
+        return { todoData };
+      }
       const start = todoData.slice(0, idx);
       const end = todoData.slice(idx+1);
-      return {
-        todoData: [...start, ...end]
+
+      switch(action) {
+        case 'delete':  // delete item
+          return {
+            todoData: [...start, ...end]
+          }
+        case 'edit':  // turn on edit mode
+          const editedItem = {...todoData[idx], liClass: "editing"};
+          return {
+            todoData: [...start, editedItem, ...end]
+          }
+        default:  // do nothing
+          console.log('Action not found');
+          return {
+            todoData
+          }
       }
     }) 
   }
-
+  deleteItem = (id) => { 
+    this.updateTodo(id, 'delete')
+  }
   turnOnEditMode = (id) => {
-    this.setState(({todoData}) => {
-      const idx = todoData.findIndex(item => item.id === id);
-      const start = todoData.slice(0, idx);
-      const end = todoData.slice(idx+1);
-      // const editedItem = {...todoData[idx], liClass: "editing"};
-      const editedItem = {...todoData[idx], description: "123"};
-      return {
-        todoData: [...start, editedItem, ...end]
-      }
-    })
-    console.log('edit', this.state.todoData[0])
+    this.updateTodo(id, 'edit')
   }
 
   render() {

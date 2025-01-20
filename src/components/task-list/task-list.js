@@ -4,10 +4,10 @@ import Task from "../task";
 
 const MyTaskList = ({ todos, onDelete, onEdit }) => { 
   const tasks = todos.map((task) => {
-    const {id, ...itemProps} = task;
+    const {id} = task;
 
     return (
-      < Task info={itemProps}
+      < Task taskObject={task}
           onDelete={() => (onDelete(id))}
           onEdit={() => (onEdit(id))} key={id} />
     )
