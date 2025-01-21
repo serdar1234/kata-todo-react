@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { formatDistanceToNow } from 'date-fns';
 import '../../index.css';
 
 function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject, filters}) {
@@ -34,6 +35,10 @@ function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject, filters}) {
        isVisible.display = "none";
     return isVisible;
   }
+  function printTime(date) {
+    let timing = formatDistanceToNow(date, {includeSeconds: true});
+    return `Created ${timing} ago`;
+  }
   
   if (editMode) {
     inputField = (
@@ -57,7 +62,7 @@ function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject, filters}) {
           />
         <label>
           <span className="description">{description}</span>
-          <span className="created">{createdAt}</span>
+          <span className="created">{printTime(createdAt)}</span>
         </label>
         <button 
           className="icon icon-edit"

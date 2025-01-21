@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { formatDistanceToNow } from 'date-fns';
 import '../../index.css';
 import Header from '../header';
 import TaskList from '../task-list/task-list';
@@ -7,25 +6,20 @@ import Footer from '../footer';
 
 export default class App extends Component {
   minID = 100;
-  d = new Date(2025, 0, 18);
+  d = new Date(2025, 0, 18);  // for testing
   state = { todoData: [
     { done: true, editMode: false,
       description: "Completed task 101", 
-      createdAt: formatDistanceToNow(this.d, {includeSeconds: true}), id: 1},
+      createdAt: this.d, id: 1},
     { done: false, editMode: true,
       description: "edit this task", 
-      createdAt: this.printTime(this.d.setDate(this.d.getDate() - 5)), id: 2},
+      createdAt: this.d.setDate(this.d.getDate() - 5), id: 2},
     { done: false, editMode: false,
       description: "Active task",
-      createdAt: this.printTime(this.d), id: 3},
+      createdAt: this.d, id: 3},
   ],
   filterState: 0,  // 0 = show all, 1 = show active, 2 = show done
   activeTasksCounter: 0  // the number of active tasks left
-  }
-
-  printTime(date) {
-    let timing = formatDistanceToNow(date, {includeSeconds: true});
-    return `Created ${timing} ago`;
   }
 
   updateTodo = (id, action, newValue) => {
@@ -86,7 +80,7 @@ export default class App extends Component {
     const newTask = { 
       done: false, editMode: false,
       description: text, 
-      createdAt: formatDistanceToNow(this.d, {includeSeconds: true}), 
+      createdAt: new Date(), 
       id: this.minID++
     }
     this.setState(() => {
