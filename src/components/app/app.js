@@ -19,8 +19,9 @@ export default class App extends Component {
       description: "Active task",
       createdAt: this.printTime(this.d), id: 3},
   ],
-  filterState: 0  // 0 = show all, 1 = show active, 2 = show done
-}
+  filterState: 0,  // 0 = show all, 1 = show active, 2 = show done
+  activeTasksCounter: 0  // the number of active tasks left
+  }
 
   printTime(date) {
     let timing = formatDistanceToNow(date, {includeSeconds: true});
@@ -100,8 +101,25 @@ export default class App extends Component {
   showActive = (num) => {
     this.setState({filterState: num})
   }
-
+  deleteInactive = () => {
+    this.setState(() => {
+      const newState = this.state.todoData.filter(
+        (task) => !task.done
+      )
+      return {
+        todoData: newState
+      }
+    })
+  }
+  countActive = () => {
+    return this.state.todoData.reduce(
+      (acc, task) => !task.done ? ++acc : acc, 0
+    )
+  }
+  
   render() {
+    let counter = this.countActive();
+
     return (
       <Fragment>
         <Header onCreate={this.addItem} />
@@ -113,7 +131,9 @@ export default class App extends Component {
             onDone={this.toggleDone}
             onEdit={this.editTask}
             turnOnEdit={this.turnOnEditMode} />
-          <Footer toggleFilters={this.showActive} />
+          <Footer toggleFilters={this.showActive} 
+            onClearInactive={this.deleteInactive}
+            counter={counter} />
         </section>
       </Fragment>
     );
