@@ -18,7 +18,9 @@ export default class App extends Component {
     { done: false, editMode: false,
       description: "Active task",
       createdAt: this.printTime(this.d), id: 3},
-  ]}
+  ],
+  filterState: 0  // 0 = show all, 1 = show active, 2 = show done
+}
 
   printTime(date) {
     let timing = formatDistanceToNow(date, {includeSeconds: true});
@@ -95,6 +97,9 @@ export default class App extends Component {
       }
     })
   }
+  showActive = (num) => {
+    this.setState({filterState: num})
+  }
 
   render() {
     return (
@@ -103,11 +108,12 @@ export default class App extends Component {
         <section className='main'>
           <TaskList 
             todos={this.state.todoData} 
+            filters={this.state.filterState}
             onDelete={this.deleteItem} 
             onDone={this.toggleDone}
             onEdit={this.editTask}
             turnOnEdit={this.turnOnEditMode} />
-          <Footer />
+          <Footer toggleFilters={this.showActive} />
         </section>
       </Fragment>
     );

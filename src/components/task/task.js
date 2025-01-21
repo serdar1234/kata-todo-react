@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import '../../index.css';
 
-function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject}) {
+function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject, filters}) {
   let {done, editMode, description, createdAt} = taskObject;
   const [startVal, editStartVal] = useState(description);
+  let isVisible = {display: "list-item"}
 
   let inputField = null;
-
   const catchInput = (evt) => {
     editStartVal(evt.target.value)
   }
@@ -29,7 +29,12 @@ function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject}) {
     if(evt.target.classList.contains("icon-destroy")) return;
     onDone();
   }
-
+  const updateVisibility = () => {
+    if ((done && filters === 1) || (!done && filters === 2))
+       isVisible.display = "none";
+    return isVisible;
+  }
+  
   if (editMode) {
     inputField = (
       <input type="text" className="edit"
@@ -42,7 +47,9 @@ function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject}) {
   const computedLiClass = done ? "completed" : (editMode ? "editing" : "");
 
   return (
-    <li className={ computedLiClass } onClick={clickHandler}>
+    <li className={ computedLiClass } onClick={clickHandler} 
+      style={updateVisibility()}
+    >
       <div className="view">
         <input className="toggle" type="checkbox" 
           checked={done}
