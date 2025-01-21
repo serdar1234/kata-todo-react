@@ -6,17 +6,16 @@ import Footer from '../footer';
 
 export default class App extends Component {
   minID = 100;
-  d = new Date(2025, 0, 18);  // for testing
   state = { todoData: [
     { done: true, editMode: false,
-      description: "Completed task 101", 
-      createdAt: this.d, id: 1},
+      description: "Completed task", 
+      createdAt: new Date(Date.now() - 6e4), id: 1},
     { done: false, editMode: true,
       description: "edit this task", 
-      createdAt: this.d.setDate(this.d.getDate() - 5), id: 2},
+      createdAt: new Date(), id: 2},
     { done: false, editMode: false,
       description: "Active task",
-      createdAt: this.d, id: 3},
+      createdAt: new Date(Date.now() - 3e5), id: 3},
   ],
   filterState: 0,  // 0 = show all, 1 = show active, 2 = show done
   activeTasksCounter: 0  // the number of active tasks left
