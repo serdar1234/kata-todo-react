@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import "../../index.css";
+import FilterBtn from "../filter-btn/filter-btn";
 
 const TasksFilter = ({toggleFilters}) => {
   const [selectedBtn, setSelectedBtn] = useState("All");
-  
+  const btnNames = ["All", "Active", "Completed"];
+
   function setSelected(e) {
     const selected = e.target.innerHTML;
     let numCode = 0;
@@ -15,25 +17,22 @@ const TasksFilter = ({toggleFilters}) => {
     toggleFilters(numCode)
   }
 
+  const buttons = btnNames.map((item) => {
+    return <FilterBtn 
+      selectedBtn={selectedBtn} 
+      setSelected={setSelected} 
+      key={item} name={item} 
+    />
+  });
+  
   return (
     <ul className="filters">
-      <li>
-        <button className={selectedBtn === "All" ? "selected" : null}
-        onClick={(e) => setSelected(e)} >All</button>
-      </li>
-      <li>
-        <button className={selectedBtn === "Active" ? "selected" : null}
-        onClick={(e) => setSelected(e)}>Active</button>
-      </li>
-      <li>
-        <button className={selectedBtn === "Completed" ? "selected" : null}
-        onClick={(e) => setSelected(e)}>Completed</button>
-      </li>
+      { buttons }
     </ul>
   )
 }
 
-TasksFilter.prototype = {
+TasksFilter.propTypes = {
   toggleFilters: PropTypes.func.isRequired,
 }
 

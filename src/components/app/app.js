@@ -17,8 +17,7 @@ export default class App extends Component {
       description: "Active task",
       createdAt: new Date(Date.now() - 3e5), id: 3},
   ],
-  filterState: 0,  // 0 = show all, 1 = show active, 2 = show done
-  activeTasksCounter: 0  // the number of active tasks left
+  filterState: 0  // 0 = show all, 1 = show active, 2 = show done
   }
 
   updateTodo = (id, action, newValue) => {
