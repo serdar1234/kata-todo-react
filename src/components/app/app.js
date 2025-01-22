@@ -118,8 +118,8 @@ export default class App extends Component {
         <Header onCreate={this.addItem} />
         <section className='main'>
           <TaskList 
-            todos={this.state.todoData} 
-            filters={this.state.filterState}
+            tasks={this.state.todoData} 
+            filterState={this.state.filterState}
             onDelete={this.deleteItem} 
             onDone={this.toggleDone}
             onEdit={this.editTask}

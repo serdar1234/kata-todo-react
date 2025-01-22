@@ -1,15 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types"
 import '../../index.css';
 import Task from "../task";
 
-const MyTaskList = ({ todos, filters, onDelete, onEdit, 
+const MyTaskList = ({ tasks=[], filterState=0, onDelete, onEdit, 
   onDone, turnOnEdit }) => { 
-  const tasks = todos.map((task) => {
+  const taskListArray = tasks.map((task) => {
     const {id} = task;
 
     return (
       < Task taskObject={task}
-          filters={filters}
+          filterState={filterState}
           onDelete={() => (onDelete(id))}
           onDone={() => (onDone(id))}
           onEdit={(newValue) => (onEdit(id, newValue))}
@@ -19,9 +20,27 @@ const MyTaskList = ({ todos, filters, onDelete, onEdit,
 
   return (
     <ul className="todo-list">
-      { tasks }
+      { taskListArray }
     </ul>
   )
+}
+
+Task.prototype = {
+  onDelete: PropTypes.func.isRequired,
+  turnOnEdit: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDone: PropTypes.func.isRequired,
+  tasks: PropTypes.array,
+  filterState: PropTypes.number
+}
+
+Task.defaultProps = {
+  onDelete: () => {},
+  urnOnEdit: () => {},
+  onEdit: () => {},
+  onDone: () => {},
+  tasks: [],
+  filterState: 0
 }
 
 export default MyTaskList;

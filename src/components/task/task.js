@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types"
 import { formatDistanceToNow } from 'date-fns';
 import '../../index.css';
 
-function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject, filters}) {
+function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject={}, filterState=0}) {
   let {done, editMode, description, createdAt} = taskObject;
   const [startVal, editStartVal] = useState(description);
   let isVisible = {display: "list-item"}
@@ -31,7 +32,7 @@ function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject, filters}) {
     onDone();
   }
   const updateVisibility = () => {
-    if ((done && filters === 1) || (!done && filters === 2))
+    if ((done && filterState === 1) || (!done && filterState === 2))
        isVisible.display = "none";
     return isVisible;
   }
@@ -74,6 +75,24 @@ function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject, filters}) {
       { inputField }
     </li>
   )
+}
+
+Task.prototype = {
+  onDelete: PropTypes.func.isRequired,
+  turnOnEdit: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDone: PropTypes.func.isRequired,
+  taskObject: PropTypes.object,
+  filterState: PropTypes.number
+}
+
+Task.defaultProps = {
+  onDelete: () => {},
+  urnOnEdit: () => {},
+  onEdit: () => {},
+  onDone: () => {},
+  taskObject: {},
+  filterState: 0
 }
 
 export default Task;

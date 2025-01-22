@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import PropTypes from "prop-types";
 import "../../index.css";
 
 const TasksFilter = ({toggleFilters}) => {
@@ -30,6 +31,14 @@ const TasksFilter = ({toggleFilters}) => {
       </li>
     </ul>
   )
+}
+
+TasksFilter.prototype = {
+  toggleFilters: PropTypes.func.isRequired,
+}
+
+TasksFilter.defaultProps = {
+  toggleFilters: () => {console.log("toggleFilters was not passed in props")}
 }
 
 export default TasksFilter; 
