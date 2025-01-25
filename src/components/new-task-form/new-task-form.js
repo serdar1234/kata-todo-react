@@ -1,23 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types"
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const NewTaskForm = ({ onCreate }) => {
   const handleEnter = (evt) => {
-    if (evt.target.value && evt.key === "Enter") {
+    if (evt.target.value && evt.key === 'Enter') {
       onCreate(evt.target.value);
-      evt.target.value = ""
+      evt.target.value = '';
     }
-  }
-  return <input className="new-todo" placeholder="What needs to be done?" autoFocus={true} 
-  onKeyDown={handleEnter}/>
-}
+  };
+  return <input className="new-todo" placeholder="What needs to be done?" onKeyDown={handleEnter} />;
+};
 
-NewTaskForm.prototype = {
-  onCreate: PropTypes.func.isRequired,
-}
+NewTaskForm.propTypes = {
+  onCreate: PropTypes.func,
+};
 
 NewTaskForm.defaultProps = {
-  onCreate: () => {console.log("onCreate was not passed in props")}
-}
+  onCreate: () => {},
+};
 
-export default NewTaskForm; 
+export default NewTaskForm;

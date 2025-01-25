@@ -1,98 +1,82 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types"
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
 import '../../index.css';
 
-function Task({onDelete, turnOnEdit, onEdit, onDone, taskObject={}, filterState=0}) {
-  let {done, editMode, description, createdAt} = taskObject;
+const Task = ({ onDelete, turnOnEdit, onEdit, onDone, taskObject = {}, filterState = 0 }) => {
+  const { done, editMode, description, createdAt } = taskObject;
   const [startVal, editStartVal] = useState(description);
-  let isVisible = {display: "list-item"}
+  const isVisible = { display: 'list-item' };
 
   let inputField = null;
   const catchInput = (evt) => {
-    editStartVal(evt.target.value)
-  }
+    editStartVal(evt.target.value);
+  };
   const updateTodo = (evt) => {
     if (evt.key === 'Enter') {
-      onEdit(startVal)
-    } else if (evt.key === 'Escape' &&
-      startVal !== description) {
-      let answer = window.confirm("Are you sure you want to exit? All unsaved changes will be lost!");
+      onEdit(startVal);
+    } else if (evt.key === 'Escape' && startVal !== description) {
+      // eslint-disable-next-line no-alert
+      const answer = window.confirm('Are you sure you want to exit? All unsaved changes will be lost!');
       if (answer) {
         onEdit(description);
-        editStartVal(description)
+        editStartVal(description);
       }
     } else if (evt.key === 'Escape') {
-        onEdit(description);
+      onEdit(description);
     }
-  }
+  };
   const clickHandler = (evt) => {
-    if(evt.target.classList.contains("icon-edit"))    return;
-    if(evt.target.classList.contains("icon-destroy")) return;
+    if (evt.target.classList.contains('icon-edit')) return;
+    if (evt.target.classList.contains('icon-destroy')) return;
     onDone();
-  }
+  };
   const updateVisibility = () => {
-    if ((done && filterState === 1) || (!done && filterState === 2))
-       isVisible.display = "none";
+    if ((done && filterState === 1) || (!done && filterState === 2)) isVisible.display = 'none';
     return isVisible;
-  }
+  };
   function printTime(date) {
-    let timing = formatDistanceToNow(date, {includeSeconds: true});
+    const timing = formatDistanceToNow(date, { includeSeconds: true });
     return `Created ${timing} ago`;
   }
-  
+
   if (editMode) {
-    inputField = (
-      <input type="text" className="edit"
-       value={startVal}
-       onChange={catchInput}
-       onKeyDown={updateTodo}
-       autoFocus={true}/>
-    )
+    inputField = <input type="text" className="edit" value={startVal} onChange={catchInput} onKeyDown={updateTodo} />;
   }
-  const computedLiClass = done ? "completed" : (editMode ? "editing" : "");
+  const computedLiClass = done ? 'completed' : editMode ? 'editing' : '';
 
   return (
-    <li className={ computedLiClass } onClick={clickHandler} 
-      style={updateVisibility()}
-    >
+    <li className={computedLiClass} onClick={clickHandler} aria-hidden="true" style={updateVisibility()}>
       <div className="view">
-        <input className="toggle" type="checkbox" 
-          checked={done}
-          onChange={() => {}}
-          />
+        <input className="toggle" type="checkbox" checked={done} onChange={() => {}} />
         <label>
           <span className="description">{description}</span>
           <span className="created">{printTime(createdAt)}</span>
         </label>
-        <button 
-          className="icon icon-edit"
-          onClick={() => turnOnEdit()}></button>
-        <button
-          className="icon icon-destroy"
-          onClick={() => onDelete()}></button>
+        <button type="button" aria-label="Edit the task" className="icon icon-edit" onClick={() => turnOnEdit()} />
+        <button type="button" aria-label="Delete the task" className="icon icon-destroy" onClick={() => onDelete()} />
       </div>
-      { inputField }
+      {inputField}
     </li>
-  )
-}
+  );
+};
 
-Task.prototype = {
-  onDelete: PropTypes.func.isRequired,
-  turnOnEdit: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onDone: PropTypes.func.isRequired,
+Task.propTypes = {
+  onDelete: PropTypes.func,
+  turnOnEdit: PropTypes.func,
+  onEdit: PropTypes.func,
+  onDone: PropTypes.func,
   taskObject: PropTypes.object,
-  filterState: PropTypes.number
-}
+  filterState: PropTypes.number,
+};
 
 Task.defaultProps = {
   onDelete: () => {},
-  urnOnEdit: () => {},
+  turnOnEdit: () => {},
   onEdit: () => {},
   onDone: () => {},
   taskObject: {},
-  filterState: 0
-}
+  filterState: 0,
+};
 
 export default Task;
