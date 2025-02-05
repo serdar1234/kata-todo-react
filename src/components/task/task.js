@@ -50,8 +50,13 @@ const Task = ({ onDelete, turnOnEdit, onEdit, onDone, taskObject = {}, filterSta
       <div className="view">
         <input className="toggle" type="checkbox" checked={done} onChange={() => {}} />
         <label>
-          <span className="description">{description}</span>
-          <span className="created">{printTime(createdAt)}</span>
+          <span className="title">{description}</span>
+          <span className="description">
+            <button type="button" aria-label="Start the task" className="icon icon-play" />
+            <button type="button" aria-label="Pause the task" className="icon icon-pause" />
+            12:25
+          </span>
+          <span className="description">{printTime(createdAt)}</span>
         </label>
         <button type="button" aria-label="Edit the task" className="icon icon-edit" onClick={() => turnOnEdit()} />
         <button type="button" aria-label="Delete the task" className="icon icon-destroy" onClick={() => onDelete()} />

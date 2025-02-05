@@ -10,7 +10,7 @@ module.exports = {
     'plugin:react/recommended',
     'eslint:recommended',
     'plugin:import/errors',
-    'plugin:import/warnings'
+    'plugin:import/warnings',
   ],
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -25,11 +25,11 @@ module.exports = {
     'arrow-body-style': 0,
     'comma-dangle': 0,
     'consistent-return': 0,
-    indent: ['error', 2, { 'SwitchCase': 1 }],
+    indent: ['error', 2, { SwitchCase: 1 }],
     'jsx-a11y/label-has-associated-control': 0,
     'prettier/prettier': 'error',
     'linebreak-style': [0, 'unix'],
-    'max-len': ["error", { "code": 120 }],
+    'max-len': ['error', { code: 120 }],
     'no-param-reassign': 0,
     'no-nested-ternary': 0,
     'object-curly-newline': 0,
@@ -38,10 +38,7 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'react/no-access-state-in-setstate': 0,
     'react/destructuring-assignment': 0,
-    'react/function-component-definition': [
-      2,
-      { namedComponents: 'arrow-function' },
-    ],
+    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'react/forbid-prop-types': 0,
     'react/jsx-one-expression-per-line': 0,
     'react/jsx-props-no-spreading': 0,
@@ -52,14 +49,7 @@ module.exports = {
     'import/order': [
       2,
       {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-        ],
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
         'newlines-between': 'always',
       },
     ],
@@ -71,8 +61,8 @@ module.exports = {
         moduleDirectory: ['node_modules', 'src/'],
       },
     },
-    'react': { 
-      'version': 'detect' 
+    react: {
+      version: 'detect',
     },
   },
 };

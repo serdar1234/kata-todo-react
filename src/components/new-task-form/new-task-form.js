@@ -8,7 +8,13 @@ const NewTaskForm = ({ onCreate }) => {
       evt.target.value = '';
     }
   };
-  return <input className="new-todo" placeholder="What needs to be done?" onKeyDown={handleEnter} />;
+  return (
+    <form className="new-todo-form">
+      <input className="new-todo" placeholder="What needs to be done?" onKeyDown={handleEnter} />
+      <input className="new-todo-form__timer" placeholder="Min" />
+      <input className="new-todo-form__timer" placeholder="Sec" />
+    </form>
+  );
 };
 
 NewTaskForm.propTypes = {
