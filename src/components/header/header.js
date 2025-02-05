@@ -8,7 +8,8 @@ const Header = ({ onCreate }) => {
   return (
     <header className="header">
       <h1>todos</h1>
-      <NewTaskForm onCreate={(txt) => onCreate(txt)} />
+      {/* <NewTaskForm onCreate={(txt) => onCreate(txt)} /> */}
+      <NewTaskForm onCreate={onCreate} />
     </header>
   );
 };

@@ -92,14 +92,14 @@ export default class App extends Component {
     this.updateTodo(id, 'patch', newValue);
   };
 
-  addItem = (text, minutes = 0, seconds = 0) => {
+  addItem = (title, minutes = 0, seconds = 0) => {
     this.minID += 1;
     const timer = minutes * 60 + seconds;
     const newTask = {
       timer,
       done: false,
       editMode: false,
-      description: text,
+      description: title,
       createdAt: new Date(),
       id: this.minID,
     };
