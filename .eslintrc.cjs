@@ -33,6 +33,7 @@ module.exports = {
     'no-param-reassign': 0,
     'no-nested-ternary': 0,
     'object-curly-newline': 0,
+    'operator-linebreak': 0,
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'react/react-in-jsx-scope': 0,

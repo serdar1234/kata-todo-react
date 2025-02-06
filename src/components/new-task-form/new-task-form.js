@@ -4,27 +4,61 @@ import PropTypes from 'prop-types';
 const NewTaskForm = ({ onCreate }) => {
   const [inputData, setInputData] = useState({
     title: '',
-    minutes: 0,
-    seconds: 0,
+    minutes: '',
+    seconds: '',
   });
 
   const handleInputChange = (evt) => {
     const { name, value } = evt.target;
+    // console.log('name-value:', name, value);
     setInputData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    if (evt.key === 'Enter') {
-      console.log('enter');
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const { title, minutes, seconds } = inputData;
+    if (
+      title.length &&
+      Number.isInteger(Math.abs(parseInt(+minutes, 10))) &&
+      Number.isInteger(Math.abs(parseInt(+seconds, 10)))
+    ) {
       onCreate(inputData);
+      setInputData({
+        title: '',
+        minutes: '',
+        seconds: '',
+      });
     }
   };
 
   return (
-    <form className="new-todo-form">
-      <input className="new-todo" name="title" placeholder="What needs to be done?" onKeyDown={handleInputChange} />
-      <input className="new-todo-form__timer" name="minutes" placeholder="Min" onKeyDown={handleInputChange} />
-      <input className="new-todo-form__timer" name="seconds" placeholder="Sec" onKeyDown={handleInputChange} />
+    <form className="new-todo-form" onSubmit={handleSubmit}>
+      <input
+        className="new-todo"
+        name="title"
+        placeholder="What needs to be done?"
+        value={inputData.title}
+        onChange={handleInputChange}
+      />
+      <input
+        className="new-todo-form__timer"
+        name="minutes"
+        placeholder="Min"
+        value={inputData.minutes}
+        onChange={handleInputChange}
+      />
+      <input
+        className="new-todo-form__timer"
+        name="seconds"
+        placeholder="Sec"
+        value={inputData.seconds}
+        onChange={handleInputChange}
+      />
+      {/* Hidden submit button */}
+      <input type="submit" style={{ display: 'none' }} />
     </form>
   );
 };

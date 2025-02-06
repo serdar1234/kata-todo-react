@@ -92,9 +92,9 @@ export default class App extends Component {
     this.updateTodo(id, 'patch', newValue);
   };
 
-  addItem = (title, minutes = 0, seconds = 0) => {
+  addItem = ({ title, minutes = 0, seconds = 0 }) => {
     this.minID += 1;
-    const timer = minutes * 60 + seconds;
+    const timer = Number(minutes) * 60 + Number(seconds);
     const newTask = {
       timer,
       done: false,
@@ -103,6 +103,8 @@ export default class App extends Component {
       createdAt: new Date(),
       id: this.minID,
     };
+    // eslint-disable-next-line no-console
+    console.log(Object.entries(newTask));
     this.setState(() => {
       return {
         todoData: [...this.state.todoData, newTask],
