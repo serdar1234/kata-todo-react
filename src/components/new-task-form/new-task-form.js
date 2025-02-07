@@ -10,7 +10,6 @@ const NewTaskForm = ({ onCreate }) => {
 
   const handleInputChange = (evt) => {
     const { name, value } = evt.target;
-    // console.log('name-value:', name, value);
     setInputData((prev) => ({
       ...prev,
       [name]: value,

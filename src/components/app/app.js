@@ -9,30 +9,7 @@ export default class App extends Component {
   minID = 100;
 
   state = {
-    todoData: [
-      // ** For testing **
-      // {
-      //   done: true,
-      //   editMode: false,
-      //   description: 'Completed task',
-      //   createdAt: new Date(Date.now() - 6e4),
-      //   id: 1,
-      // },
-      // {
-      //   done: false,
-      //   editMode: true,
-      //   description: 'edit this task',
-      //   createdAt: new Date(),
-      //   id: 2,
-      // },
-      // {
-      //   done: false,
-      //   editMode: false,
-      //   description: 'Active task',
-      //   createdAt: new Date(Date.now() - 3e5),
-      //   id: 3,
-      // },
-    ],
+    todoData: [],
     filterState: 0, // 0 = show all, 1 = show active, 2 = show done
   };
 
