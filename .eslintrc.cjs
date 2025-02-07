@@ -26,6 +26,7 @@ module.exports = {
     'comma-dangle': 0,
     'consistent-return': 0,
     indent: ['error', 2, { SwitchCase: 1 }],
+    'jsx-a11y/no-autofocus': 0,
     'jsx-a11y/label-has-associated-control': 0,
     'prettier/prettier': 'error',
     'linebreak-style': [0, 'unix'],

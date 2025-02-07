@@ -1,10 +1,13 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
+
+import Timer from '../timer';
 import '../../index.css';
 
-const Task = ({ onDelete, turnOnEdit, onEdit, onDone, taskObject = {}, filterState = 0 }) => {
-  const { done, editMode, description, createdAt } = taskObject;
+const Task = ({ onDelete, turnOnEdit, editTimer, onEdit, onDone, taskObject = {}, filterState = 0 }) => {
+  const { done, editMode, description, createdAt, id: taskID, timer } = taskObject;
   const [startVal, editStartVal] = useState(description);
   const isVisible = { display: 'list-item' };
 
@@ -26,11 +29,7 @@ const Task = ({ onDelete, turnOnEdit, onEdit, onDone, taskObject = {}, filterSta
       onEdit(description);
     }
   };
-  const clickHandler = (evt) => {
-    if (evt.target.classList.contains('icon-edit')) return;
-    if (evt.target.classList.contains('icon-destroy')) return;
-    onDone();
-  };
+
   const updateVisibility = () => {
     if ((done && filterState === 1) || (!done && filterState === 2)) isVisible.display = 'none';
     return isVisible;
@@ -41,25 +40,25 @@ const Task = ({ onDelete, turnOnEdit, onEdit, onDone, taskObject = {}, filterSta
   }
 
   if (editMode) {
-    inputField = <input type="text" className="edit" value={startVal} onChange={catchInput} onKeyDown={updateTodo} />;
+    inputField = (
+      <input type="text" autoFocus className="edit" value={startVal} onChange={catchInput} onKeyDown={updateTodo} />
+    );
   }
   const computedLiClass = done ? 'completed' : editMode ? 'editing' : '';
 
   return (
-    <li className={computedLiClass} onClick={clickHandler} aria-hidden="true" style={updateVisibility()}>
+    <li className={computedLiClass} style={updateVisibility()}>
       <div className="view">
-        <input className="toggle" type="checkbox" checked={done} onChange={() => {}} />
-        <label>
+        <input id={`task_${taskID}`} className="toggle" type="checkbox" checked={done} onChange={onDone} />
+        <label htmlFor={`task_${taskID}`}>
           <span className="title">{description}</span>
           <span className="description">
-            <button type="button" aria-label="Start the task" className="icon icon-play" />
-            <button type="button" aria-label="Pause the task" className="icon icon-pause" />
-            12:25
+            <Timer timer={timer} editTimer={(value) => editTimer(value)} />
           </span>
           <span className="description">{printTime(createdAt)}</span>
         </label>
-        <button type="button" aria-label="Edit the task" className="icon icon-edit" onClick={() => turnOnEdit()} />
-        <button type="button" aria-label="Delete the task" className="icon icon-destroy" onClick={() => onDelete()} />
+        <button type="button" aria-label="Edit the task" className="icon icon-edit" onClick={turnOnEdit} />
+        <button type="button" aria-label="Delete the task" className="icon icon-destroy" onClick={onDelete} />
       </div>
       {inputField}
     </li>
@@ -71,6 +70,7 @@ Task.propTypes = {
   turnOnEdit: PropTypes.func,
   onEdit: PropTypes.func,
   onDone: PropTypes.func,
+  editTimer: PropTypes.func,
   taskObject: PropTypes.object,
   filterState: PropTypes.number,
 };
@@ -80,6 +80,7 @@ Task.defaultProps = {
   turnOnEdit: () => {},
   onEdit: () => {},
   onDone: () => {},
+  editTimer: () => {},
   taskObject: {},
   filterState: 0,
 };

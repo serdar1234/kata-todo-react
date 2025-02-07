@@ -53,13 +53,19 @@ export default class App extends Component {
           };
         case 'done': // toggle done status
           if (todoData[idx].editMode) break;
-          editedItem = { ...todoData[idx], done: !todoData[idx].done };
+          editedItem = { ...todoData[idx], done: !todoData[idx].done, timer: 0 };
+
           return {
             todoData: [...start, editedItem, ...end],
           };
         case 'edit': // turn on edit mode
           if (todoData[idx].done) break;
           editedItem = { ...todoData[idx], editMode: true };
+          return {
+            todoData: [...start, editedItem, ...end],
+          };
+        case 'timer': // edit timer
+          editedItem = { ...todoData[idx], timer: newValue };
           return {
             todoData: [...start, editedItem, ...end],
           };
@@ -103,13 +109,15 @@ export default class App extends Component {
       createdAt: new Date(),
       id: this.minID,
     };
-    // eslint-disable-next-line no-console
-    console.log(Object.entries(newTask));
     this.setState(() => {
       return {
         todoData: [...this.state.todoData, newTask],
       };
     });
+  };
+
+  editTimer = (id, newValue) => {
+    this.updateTodo(id, 'timer', newValue);
   };
 
   showActive = (num) => {
@@ -142,6 +150,7 @@ export default class App extends Component {
             onDelete={this.deleteItem}
             onDone={this.toggleDone}
             onEdit={this.editTask}
+            editTimer={this.editTimer}
             turnOnEdit={this.turnOnEditMode}
           />
           <Footer toggleFilters={this.showActive} onClearInactive={this.deleteInactive} counter={counter} />
