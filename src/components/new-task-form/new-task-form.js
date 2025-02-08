@@ -38,6 +38,7 @@ const NewTaskForm = ({ onCreate }) => {
       <input
         className="new-todo"
         name="title"
+        type="text"
         placeholder="What needs to be done?"
         value={inputData.title}
         onChange={handleInputChange}
@@ -45,6 +46,9 @@ const NewTaskForm = ({ onCreate }) => {
       <input
         className="new-todo-form__timer"
         name="minutes"
+        type="text"
+        inputMode="numeric"
+        pattern="\d*"
         placeholder="Min"
         value={inputData.minutes}
         onChange={handleInputChange}
@@ -52,11 +56,14 @@ const NewTaskForm = ({ onCreate }) => {
       <input
         className="new-todo-form__timer"
         name="seconds"
+        type="text"
+        inputMode="numeric"
+        pattern="\d*"
         placeholder="Sec"
         value={inputData.seconds}
         onChange={handleInputChange}
       />
-      {/* Hidden submit button */}
+      {/* Hidden Submit button */}
       <input type="submit" style={{ display: 'none' }} />
     </form>
   );

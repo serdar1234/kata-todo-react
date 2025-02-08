@@ -37,8 +37,8 @@ const Timer = ({ timer, editTimer }) => {
     if (start === null && isPaused) {
       setStart(Date.now());
     } else if (start !== null && isPaused) {
-      setStart(Date.now());
       setTimeLeft(timer);
+      setStart(Date.now());
     }
 
     setIsPaused(false);
